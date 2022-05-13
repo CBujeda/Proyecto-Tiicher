@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>TIICHER | Lista de Cursos</title>
+<link th:href="@{http://localhost:9876/css/bootstrap.min.css}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<style type="text/css">
+.dat_but {
+  transition-duration: 0.4s;
+}
+
+.dat_but:hover {
+  background-color: grey; /* Green */
+  color: white;
+}
+
+</style>
+</head>
+<body>
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">TIICHER</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+	    	<!--  -->
+		
+      <form th:action="@{/logout}" method="post" style="height:100%">
+      	<a style="color:#FFF">
+      		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+			  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+			  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+			</svg>
+		</a>
+          <button type="submit" class="dat_but" style="height:30px">Cerrar Sesion</button>
+      </form>
+      <!-- class="nav-link px-3" -->
+      
+    </div>
+  </div>
+</header>
+	
+
+	
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-sm-center h-100">
+				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+					<div class="text-center my-5">
+					
+					<div th:if="${not #lists.isEmpty(clase)}">	
+						<div th:if="${param.error}" class="alert alert-danger mb-3">Se produjo un error o valores invalidos</div>
+							<table class="table table-dark table-hover">
+							  <thead class="table-dark ">
+								<tr>
+									<th>Curso</th>
+									<th>Clase</th>
+								</tr>
+							  </thead>
+						
+							  <tbody>
+								<tr th:each="clase : ${clase}">
+									<td th:text="${clase.curso.nombre_curso}"></td>
+									<td th:text="${clase.nombre_clase}"></td>
+									 
+									<td> 
+										<a th:href="@{'/private/index/edit/clase/{id}' (id=${clase.id_clase})}">
+											<svg style="cursor: hand" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+											  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+											  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+											</svg>
+										</a>  
+									</td>
+									<td> 
+										<a th:href="@{'/private/index/delete/clase/{id}' (id=${clase.id_clase})}">
+											<svg style="cursor: hand" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+											  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+											</svg>
+										</a>  
+									</td>
+						      	 </tr>
+							  </tbody>
+							</table>
+							<div class="d-flex align-items-center">
+								<a type="button" th:href="@{/private/index}" class="btn btn-sm btn-outline-secondary">Atras</a>
+							</div>
+							
+							 <div class="toast" style="margin-top:10px;">
+							    <div class="toast-header" style="background-color:red; color:#FFF;">
+							      <strong class="me-auto">⚠️ TIICHER</strong>
+							      <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+							    </div>
+							    <div class="toast-body">
+							      <p>Aviso al eliminar tambien borras registros asociados</p>
+							    </div>
+							  </div>
+							  <script>
+							  window.onload = function() {
+								  var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+								  var toastList = toastElList.map(function(toastEl) {
+								    return new bootstrap.Toast(toastEl)
+								  })
+								  toastList.forEach(toast => toast.show()) 
+								}
+							</script>
+
+							
+						</div>
+						<div th:if="${#lists.isEmpty(clase)}">	
+							<p>No hay clases antes tienes que crear una</p>
+							<a type="button" th:href="@{/private/index}" class="btn btn-sm btn-outline-secondary">Atras</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

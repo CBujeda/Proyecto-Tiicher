@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="/layouts/base-layout::head"></head>
+<meta charset="UTF-8"/>
+
+<body>
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-sm-center h-100">
+				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+					<div class="text-center my-5">
+						<img th:src="@{/images/logo.png}" alt="logo" width="100">
+					</div>
+					<div th:if="${param.error}" class="alert alert-danger mb-3">Credenciales incorrectas</div>
+					<div class="card shadow-lg">
+						<div class="card-body p-5">
+							<h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
+							
+							<form method="POST" class="needs-validation" novalidate="" autocomplete="off" th:action="@{/auth/login-post}" role="form">
+								<div class="mb-3">
+									<label class="mb-2 text-muted" for="user">Usuario</label>
+									<input type="text" name="username" id="user" class="form-control" value="" required autofocus>
+									<div class="invalid-feedback">
+										Usuario invalido
+									</div>
+								</div>
+
+								<div class="mb-3">
+									<div class="mb-2 w-100">
+										<label class="text-muted" for="password">Contraseña</label>
+									</div>
+									<input id="password" type="password" name="password" class="form-control" required>
+								    <div class="invalid-feedback">
+								    	Contraseña requerida
+							    	</div>
+								</div>
+
+								<div class="d-flex align-items-center">
+	
+									<input type="submit" class="btn btn-primary ms-auto" value="login"/>
+
+								</div>
+							</form>
+						</div>
+						<div class="card-footer py-3 border-0">
+							<div class="text-center">
+								No tienes cuenta? <a th:href="@{/auth/registro}" class="text-dark">Registrate</a>
+							</div>
+							<div class="text-center">
+								Ir a <a th:href="@{/}" class="text-dark">Home</a>
+							</div>
+						</div>
+					</div>
+					<div class="text-center mt-5 text-muted">
+						Copyright &copy; 2022 &mdash; TIICHER
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script th:src="@{js/login.js}"></script>
+</body>
+</html>
+
+</html>

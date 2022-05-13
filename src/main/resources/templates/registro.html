@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="/layouts/base-layout::head"></head>
+<meta charset="UTF-8"/>
+<body>
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-sm-center h-100">
+				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+					<div class="text-center my-5">
+						<img  th:src="@{/images/logo.png}" alt="logo" width="100">
+					</div>
+					
+					<div th:if="${param.error}" class="alert alert-danger mb-3">Datos invalidos</div>
+					<div th:if="${param.emailNone}" class="alert alert-warning mb-3">Email Invalido</div>
+					<div class="card shadow-lg">
+						<div class="card-body p-5">
+							<h1 class="fs-4 card-title fw-bold mb-4">Register</h1>
+							<form class="needs-validation" novalidate="" autocomplete="off" th:action="@{/auth/registro}" th:object="${usuario}" method="post">
+								<div class="mb-3">
+									<label class="mb-2 text-muted" for="name">Nombre*</label>
+									<input id="name" type="text" class="form-control" name="name" th:field="*{nombre}" value="" required autofocus>
+									<div class="invalid-feedback">
+										Nombre obligatorio
+									</div>
+									 <small th:if="${#fields.hasErrors('nombre')}"th:errors="*{nombre}"></small>
+								</div>
+								<div class="mb-3">
+									<label class="mb-2 text-muted" for="name">Apellidos</label>
+									<input id="lastname" type="text" class="form-control" name="lastname" th:field="*{apellido}" value="" required>
+									<div class="invalid-feedback">
+										Apellidos obligatorios										
+									</div>
+								</div>
+								<div class="mb-3">
+									<label class="mb-2 text-muted" for="email">E-Mail</label>
+									<input id="email" type="email" class="form-control" name="email" value=""  th:field="*{email}" required>
+									<div class="invalid-feedback">
+										Correo Invalido
+									</div>
+								</div>
+									
+								<div class="mb-3">
+									<label class="mb-2 text-muted" for="name">Nombre de usuario*</label>
+									<input id="user" type="text" class="form-control" name="user" th:field="*{username}" value="" required>
+									<div class="invalid-feedback">
+										Apellidos obligatorios										
+									</div>
+								</div>	
+									
+									
+								<div class="mb-3">
+									<label class="mb-2 text-muted" for="password">Contraseña*</label>
+									<input id="password" type="password" class="form-control" name="password" th:field="*{password}" required>
+								    <div class="invalid-feedback">
+								    	Contraseña requerida
+							    	</div>
+								</div>
+
+								<div class="align-items-center d-flex">
+									 <input type="submit" class="btn btn-primary ms-auto" value="Continuar"/>
+								</div>
+							</form>
+						</div>
+						<div class="card-footer py-3 border-0">
+							<div class="text-center">
+								Ya tienes una cuenta? <a th:href="@{/auth/login}" class="text-dark">Login</a>
+								
+							</div>
+							<div class="text-center">
+								Ir a <a th:href="@{/}" class="text-dark">Home</a>
+							</div>
+							
+						</div>
+					</div>
+					<div class="text-center mt-5 text-muted">
+						Copyright &copy; 2022 &mdash; TIICHER
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script th:src="@{js/login.js}"></script>
+</body>
+</html>

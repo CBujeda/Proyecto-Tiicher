@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html class="h-100">
+<!--<head th:replace="/layouts/base-layout::head"></head> -->
+  <head>
+    <!-- Bootstrap core CSS -->
+    <title>TIICHER</title>
+	<link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{css/logo.css}" rel="stylesheet">
+	
+	    <style>
+	      .bd-placeholder-img {
+	        font-size: 1.125rem;
+	        text-anchor: middle;
+	        -webkit-user-select: none;
+	        -moz-user-select: none;
+	        user-select: none;
+	      }
+	
+	      @media (min-width: 768px) {
+	        .bd-placeholder-img-lg {
+	          font-size: 3.5rem;
+	        }
+	      }
+	    </style>
+	
+	    
+	    <!-- Custom styles for this template -->
+	    <link th:href="@{css/cover.css}" rel="stylesheet">
+	  </head>
+	  <body class="d-flex h-100 text-center text-white bg-dark">
+	    
+	<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+	  <header class="mb-auto">
+	    <div>
+	      <h3 class="float-md-start mb-0">TIICHER</h3>
+	      <nav class="nav nav-masthead justify-content-center float-md-end">
+	        <a class="nav-link" th:href="@{/auth/login}">Login</a>
+	        <a class="nav-link" th:href="@{/auth/registro}">Register</a>
+	      </nav>
+	    </div>
+	  </header>
+	
+	  <main >  <!-- class="px-3" -->
+	  <div >
+    		<img th:src="@{/images/logo_shiro.png}" alt="logo" width="60%">
+	    	
+    	</div>
+	  </main>
+	
+	  <footer class="mt-auto text-white-50">
+	    <p>Copyright &copy; 2022 &mdash; TIICHER</p>
+	  </footer>
+	</div>
+
+
+    <script type='text/javascript'>
+		document.oncontextmenu = function(){return false}
+	</script>
+  </body>
+</html>
+
+</html>

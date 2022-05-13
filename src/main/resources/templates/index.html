@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>TIICHER</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link th:href="@{http://localhost:9876/css/bootstrap.min.css}" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      
+      	.dat_but {
+		  transition-duration: 0.4s;
+		}
+		
+		.dat_but:hover {
+		  background-color: grey; /* Green */
+		  color: white;
+		}
+      
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link th:href="@{http://localhost:9876/css/dashboard.css}" rel="stylesheet">
+  </head>
+  <body>
+    
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">TIICHER</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+	    	<!--  -->
+		
+      <form th:action="@{/logout}" method="post" style="height:100%">
+      	<a style="color:#FFF">
+      		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+			  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+			  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+			</svg>
+		</a>
+          <button type="submit" class="dat_but" style="height:30px">Cerrar Sesion</button>
+      </form>
+      <!-- class="nav-link px-3" -->
+      
+    </div>
+  </div>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+		<li class="nav-item">
+			<span th:if="${session.usuario!=null} " class="shadow p-3 mb-5 bg-body rounded" style="margin-left:30px; ">Bienvenid@
+							<span class="font-italic" th:text="${session.usuario.nombre}"></span>
+			</span>
+		</li>
+		
+          <li class="nav-item">
+		   <span data-feather="file"></span>
+            <a type="button" th:href="@{/private/add/curso}" class="btn btn-sm btn-outline-secondary" style="margin-left:30px; margin-top:30px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+			  <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+			</svg>
+             Curso</a>
+            <a type="button" th:href="@{/private/index/edit/list/curso}"  class="btn btn-sm btn-outline-secondary" style="margin-top:30px">
+				<svg style="cursor: hand" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+				  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+				  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+				</svg>
+			</a>
+          </li>
+          <li class="nav-item">
+		   <span data-feather="file"></span>
+          	<a type="button" th:href="@{/private/add/clase}"  class="btn btn-sm btn-outline-secondary" style="margin-left:30px; margin-top:10px">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+			  <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+			</svg>
+			Clase</a>
+          	<a type="button" th:href="@{/private/index/edit/list/clase}" class="btn btn-sm btn-outline-secondary" style="margin-top:10px">
+				<svg style="cursor: hand" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+				  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+				  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+				</svg>
+			</a>
+          </li>
+          
+        </ul>
+		
+      </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Dashboard</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+          
+          	<form method="POST" class="needs-validation" th:object="${registro}" novalidate="" autocomplete="off" th:action="@{/private/index/date}" role="form">
+          	
+				<input style="padding-bottom:5px;" th:value="${{nowDate.fecha_hora_inicio}}"  field="*{fecha_hora_inicio}" type="datetime-local" name="fecha_hora_inicio" id="user" required >
+				<input type="submit"  class="btn btn-sm btn-outline-secondary" value="🔍"/>
+				<!--  -->
+			</form>
+          </div>	
+        </div>
+      </div>
+
+    <!-- Ubicacion de calendario -->
+	
+	<div th:if="${not #lists.isEmpty(registro)}">	
+		<table class="table table-dark table-hover">
+		  <thead class="table-dark ">
+			<tr>
+			<th>#ID</th>
+			<th>Curso</th>
+			<th>Clase</th>
+			<th>Fecha Hora Inicio</th>
+			<th>Fecha Hora Fin</th>
+			<th>Anotaciones</th>
+			<th>Homework</th>
+			</tr>
+		  </thead>
+	
+		  <tbody>
+			<tr th:each="registro : ${registro}">
+				<td th:text="${registro.id_registro}"></td>
+				 
+				<td th:text="${registro.clase.curso.nombre_curso}"></td>
+				<td th:text="${registro.clase.nombre_clase}"></td> 
+				<td th:text="${registro.fecha_hora_inicio}"></td>
+				<td th:text="${registro.fecha_hora_finalizacion}"></td>
+				<td th:text="${registro.anotaciones}"></td>
+				<td th:text="${registro.homework}"></td>
+				<td> 
+					<a th:href="@{'/private/index/edit/{id}' (id=${registro.id_registro})}">
+						<svg style="cursor: hand" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+						  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+						  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+						</svg>
+					</a>  
+				</td>
+				<td> 
+					<a th:href="@{'/private/index/delete/{id}' (id=${registro.id_registro})}">
+						<svg style="cursor: hand" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+						  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+						</svg>
+					</a>  
+				</td>
+	      	 </tr>
+		  </tbody>
+		</table>
+	</div>
+
+	<a type="button" th:href="@{/private/add}" class="btn btn-sm btn-outline-secondary">+</a>
+	<!-- 
+	<table class="table table-dark table-hover">
+	  <thead class="table-dark ">
+		<tr>
+		<th>#ID</th>
+		<th>Hora</th>
+		<th>Curso</th>
+		<th>Notas</th>
+		</tr>
+	  </thead>
+
+	  <tbody>
+		<tr>
+		<td>1</td>
+		<td>8:00 <br>10:00</td>
+		<td>Ingles <br> B1 mañana</td>
+		<td>Hoy vamos a dar el presente simple</td>
+		</tr>
+	  </tbody>
+	</table>
+
+
+	-->
+
+
+
+    </main>
+  </div>
+</div>
+
+
+    <script th:src="@{http://localhost:9876/js/bootstrap.bundle.min.js}"></script>
+
+      <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>
+  </body>
+</html>
