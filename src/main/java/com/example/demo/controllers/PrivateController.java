@@ -405,4 +405,16 @@ public class PrivateController {
 		return "redirect:/private/index/edit/list/clase";
 	}
 	
+	
+	@GetMapping("/index/user")
+	public String goUser(Authentication auth, HttpSession session, Model model) {
+		String username = auth.getName();
+		if(session.getAttribute("usuario") == null) {
+			Usuario usuario = usuarioService.findByUsername(username);
+			usuario.setPassword(null);
+			session.setAttribute("usuario", usuario);
+		}		
+		return "editUser";
+	}
+	
 }
