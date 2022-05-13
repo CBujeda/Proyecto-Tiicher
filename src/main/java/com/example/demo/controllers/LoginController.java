@@ -49,9 +49,11 @@ public class LoginController {
 				usuario.getNombre().length() < 3 ||
 				usuario.getPassword().length() < 3 || user != null ) {
 				return "redirect:/auth/registro?error=true";
+				
 			}else if(!usuario.getEmail().contains(".") && 
 					 !usuario.getEmail().contains("@") && 
 					 !usuario.getEmail().equalsIgnoreCase("") ){
+				
 				return "redirect:/auth/registro?emailNone=true";
 			} else {
 				model.addAttribute("usuario", usuarioService.registrar(usuario));
