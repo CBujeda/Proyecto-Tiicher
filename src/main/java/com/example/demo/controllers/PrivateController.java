@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -471,5 +472,75 @@ public class PrivateController {
 		
 		
 	}
+	
+	
+	@PostMapping("/index/date/next")
+	public String addDateNext(Authentication auth, HttpSession session, Model model,  @ModelAttribute Registro registro) {
+		String username = auth.getName();
+		if(session.getAttribute("usuario") == null) {
+			Usuario usuario = usuarioService.findByUsername(username);
+			usuario.setPassword(null);
+			session.setAttribute("usuario", usuario);
+		}
+		
+		
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //yyyy-mm-dd hh:mm:ss
+			Date next = registro.getFecha_hora_inicio();
+			Calendar c = Calendar.getInstance();
+			c.setTime(next);
+			c.add(Calendar.DATE, 1);
+			next = c.getTime();
+			String fecha = dateFormat.format(next);
+			registro.setFecha_hora_inicio(next);
+			
+			try {
+				List<Registro> listNow = registroService.findRegistroByFecha(fecha);
+				model.addAttribute("registro",listNow);
+				model.addAttribute("nowDate", registro);
+			} catch (Exception e) {
+				System.out.println(e.toString());
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return "index";
+	}
+	
+	@PostMapping("/index/date/previous")
+	public String addDatePrevious(Authentication auth, HttpSession session, Model model,  @ModelAttribute Registro registro) {
+		String username = auth.getName();
+		if(session.getAttribute("usuario") == null) {
+			Usuario usuario = usuarioService.findByUsername(username);
+			usuario.setPassword(null);
+			session.setAttribute("usuario", usuario);
+		}
+		
+		
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //yyyy-mm-dd hh:mm:ss
+			Date next = registro.getFecha_hora_inicio();
+			Calendar c = Calendar.getInstance();
+			c.setTime(next);
+			c.add(Calendar.DATE, -1);
+			next = c.getTime();
+			String fecha = dateFormat.format(next);
+			registro.setFecha_hora_inicio(next);
+			
+			try {
+				List<Registro> listNow = registroService.findRegistroByFecha(fecha);
+				model.addAttribute("registro",listNow);
+				model.addAttribute("nowDate", registro);
+			} catch (Exception e) {
+				System.out.println(e.toString());
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return "index";
+	}
+	
 	
 }
