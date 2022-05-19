@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -414,7 +416,60 @@ public class PrivateController {
 			usuario.setPassword(null);
 			session.setAttribute("usuario", usuario);
 		}		
+		Usuario user = usuarioService.findByUsername(username);
+		model.addAttribute("usuario", user);
 		return "editUser";
+	}
+	
+	
+	@PostMapping("/index/user/update")
+	public String userUpdate(Authentication auth, HttpSession session, Model model, @ModelAttribute Usuario user1) {
+		String username = auth.getName();
+		if(session.getAttribute("usuario") == null) {
+			Usuario usuario = usuarioService.findByUsername(username);
+			usuario.setPassword(null);
+			session.setAttribute("usuario", usuario);
+		}	
+		
+		Usuario user = usuarioService.findByUsername(username);
+		user1.setId(user.getId());
+		
+			List<Usuario> usuarioList = usuarioService.findAll();
+			for(int i = 0; i < usuarioList.size(); i++) {
+				if(usuarioList.get(i).getUsername().equalsIgnoreCase(username)) {
+					usuarioList.remove(i);
+				}
+			}
+			for(int i = 0; i < usuarioList.size(); i++) {
+				if(usuarioList.get(i).getUsername().equalsIgnoreCase(user1.getUsername())) {
+					return "redirect:/private/index/user?error=true";
+				}
+			}
+
+		if( user1.getUsername().length() < 3 ||
+				user1.getNombre().length() < 3 ) {
+			return "redirect:/private/index/user?error=true";
+			
+		}
+		
+		if(user1.getPassword().length() != 0 && user1.getPassword().length() < 3 ) {
+			return "redirect:/private/index/user?errorPass=true";
+		}
+	
+		if(!user1.getEmail().contains(".") && 
+				 !user1.getEmail().contains("@") && 
+				 !user1.getEmail().equalsIgnoreCase("") ){
+			
+			return "redirect:/private/index/user?emailNone=true";
+		} 
+		if(user1.getPassword().equalsIgnoreCase("")) {
+			usuarioService.updateNoPass(user1);
+		}else {
+			usuarioService.updateWithPass(user1);
+		}
+		return "redirect:/private/index/user";
+		
+		
 	}
 	
 }

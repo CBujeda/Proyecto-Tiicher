@@ -50,7 +50,8 @@ public class LoginController {
 				usuario.getPassword().length() < 3 || user != null ) {
 				return "redirect:/auth/registro?error=true";
 				
-			}else if(!usuario.getEmail().contains(".") && 
+			}
+			if(!usuario.getEmail().contains(".") && 
 					 !usuario.getEmail().contains("@") && 
 					 !usuario.getEmail().equalsIgnoreCase("") ){
 				

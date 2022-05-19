@@ -121,9 +121,30 @@
         <h1 class="h2">Dashboard</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group me-2">
-          
+          		
+			<form id="date_previous" method="POST" class="needs-validation" th:object="${registro}" novalidate="" autocomplete="off" th:action="@{/private/index/date/previous}" role="form">
+          		<input style="display:none" th:value="${{nowDate.fecha_hora_inicio}}"  field="*{fecha_hora_inicio}" type="datetime-local" name="fecha_hora_inicio" id="user" required >    		
+          		<a href="javascript:{}" onclick="document.getElementById('date_previous').submit();" type="submit"  class="btn btn-sm btn-outline-secondary" style="padding-bottom:5px;margin-right:5px;">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+					  <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+					</svg>
+				</a>
+			</form>
+				
+				
+			<form id="date_next" method="POST" class="needs-validation" th:object="${registro}" novalidate="" autocomplete="off" th:action="@{/private/index/date/next}" role="form">
+          		<input style="display:none" th:value="${{nowDate.fecha_hora_inicio}}"  field="*{fecha_hora_inicio}" type="datetime-local" name="fecha_hora_inicio" id="user" required >    		
+
+          		<a href="javascript:{}" onclick="document.getElementById('date_next').submit();" type="submit"  class="btn btn-sm btn-outline-secondary" style="padding-bottom:5px; margin-right:10px;">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+					  <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+					</svg>
+				</a>
+
+			</form>
           	<form method="POST" class="needs-validation" th:object="${registro}" novalidate="" autocomplete="off" th:action="@{/private/index/date}" role="form">
-          	
+          		
+          		
 				<input style="padding-bottom:5px;" th:value="${{nowDate.fecha_hora_inicio}}"  field="*{fecha_hora_inicio}" type="datetime-local" name="fecha_hora_inicio" id="user" required >
 				<input type="submit"  class="btn btn-sm btn-outline-secondary" value="🔍"/>
 				<!--  -->
@@ -167,15 +188,27 @@
 					</a>  
 				</td>
 				<td> 
-					<a th:href="@{'/private/index/delete/{id}' (id=${registro.id_registro})}">
-						<svg style="cursor: hand" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+					<!-- th:href="@{'/private/index/delete/{id}' (id=${registro.id_registro})} -->
+					<a  th:onclick="@{'confirmDelete(' + ${registro.id_registro} + ');'}">
+						<svg style="cursor: hand" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash-fill" viewBox="0 0 16 16">
 						  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 						</svg>
-					</a>  
+					</a> 
 				</td>
 	      	 </tr>
 		  </tbody>
 		</table>
+		<script type="text/javascript">
+			function confirmDelete(link){
+				  if (confirm("Desea eliminar la Sesion?") == true) {
+					  	link = "/private/index/delete/" + link;
+					 	 window.location.href = link;
+					  }
+			}
+		
+		</script>
+		
+		
 	</div>
 
 	<a type="button" th:href="@{/private/add}" class="btn btn-sm btn-outline-secondary">+</a>
