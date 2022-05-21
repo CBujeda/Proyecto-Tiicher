@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +23,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.models.entity.Clase;
 import com.example.demo.models.entity.Curso;
+import com.example.demo.models.entity.Horario;
 import com.example.demo.models.entity.Registro;
 import com.example.demo.models.entity.Usuario;
 import com.example.demo.models.service.IClaseService;
 import com.example.demo.models.service.ICursoService;
+import com.example.demo.models.service.IHorarioService;
 import com.example.demo.models.service.IRegistroService;
 import com.example.demo.models.service.IUsuarioService;
 
@@ -41,6 +44,8 @@ public class PrivateController {
 	private ICursoService cursoService;
 	@Autowired
 	private IClaseService claseService;
+	@Autowired
+	private IHorarioService horarioService;
 	
 	@GetMapping("/index")
 	public String index(Authentication auth, HttpSession session,Model model) {
@@ -542,5 +547,131 @@ public class PrivateController {
 		return "index";
 	}
 	
+	
+	@GetMapping("/index/list/horarios")
+	public String editListHorario(Authentication auth, HttpSession session,Model model) {
+		String username = auth.getName();
+		if(session.getAttribute("usuario") == null) {
+			Usuario usuario = usuarioService.findByUsername(username);
+			usuario.setPassword(null);
+			session.setAttribute("usuario", usuario);
+		
+		}
+		
+		try {
+			List<Clase> listClases = claseService.findAll();
+			List<Horario> listHorario = horarioService.findAll(); 
+			model.addAttribute("clase",listClases);
+			model.addAttribute("horario",listHorario);
+		} catch (Exception e) {
+			System.out.println(e.toString() + " Error en listas de curso");
+		}
+		
+		return "listHorarios";
+	}
+	
+	
+	@GetMapping("/index/add/horario")
+	public String editNewHorario(Authentication auth, HttpSession session,Model model) {
+		String username = auth.getName();
+		if(session.getAttribute("usuario") == null) {
+			Usuario usuario = usuarioService.findByUsername(username);
+			usuario.setPassword(null);
+			session.setAttribute("usuario", usuario);
+		
+		}
+		
+		Date d = new Date();
+			 DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+			 Date date = new Date();
+		  Horario timeNow = new Horario();
+		  	timeNow.setHora_inicio(dateFormat.format(date));
+		try {
+			
+			List<Clase> listClases = claseService.findAll();
+			model.addAttribute("horario",new Horario());
+			model.addAttribute("clase",listClases);
+			model.addAttribute("timeNow",timeNow);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return "addHorario";
+	}
+	
+	
+	@PostMapping("/index/add/horario/new")
+	public String addHorario(Authentication auth, HttpSession session, Model model,  @ModelAttribute Horario horario) {
+		String username = auth.getName();
+		if(session.getAttribute("usuario") == null) {
+			Usuario usuario = usuarioService.findByUsername(username);
+			usuario.setPassword(null);
+			session.setAttribute("usuario", usuario);
+		}
+		
+		try {
+			//-- fecha junio
+			DateFormat salidaformat = new SimpleDateFormat("yyyy-MM-dd"); //yyyy-mm-dd hh:mm:ss
+			DateFormat year = new SimpleDateFormat("yyyy"); //yyyy
+			Date now = new Date();
+			String yearStr = year.format(now);
+			Calendar cl = Calendar.getInstance();
+			cl.setTime(now);
+			cl.set(Integer.parseInt(yearStr), 5, 9);
+			now = cl.getTime();
+			String ultimoFecha = salidaformat.format(now);
+			System.out.println("Ultima fecha" + ultimoFecha);
+			
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //yyyy-mm-dd hh:mm:ss
+			Date next = new Date();
+			Calendar c = Calendar.getInstance();
+			
+			DateFormat dateFormatoutput = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			
+			while(true) {	
+				String fecha = dateFormat.format(next);
+				System.out.println(fecha);
+				String output_fecha_inicio = fecha + " " + horario.getHora_inicio();
+				String output_fecha_finalizacion = fecha +" " + horario.getHora_inicio();
+				Calendar cfin = Calendar.getInstance();
+				Date ofi = dateFormatoutput.parse(output_fecha_inicio);
+				Date off = dateFormatoutput.parse(output_fecha_finalizacion);
+				cfin.setTime(off);
+				cfin.add(Calendar.HOUR, 1);
+				off = cfin.getTime();
+				System.out.println(ofi);
+				System.out.println(off);
+				
+				Registro data = new Registro();
+				data.setClase(horario.getClase());
+				data.setFecha_hora_inicio(ofi);
+				data.setFecha_hora_finalizacion(off);
+				data.setHomework("");
+				data.setAnotaciones("");
+				data.setCancelado(0);
+				if(data != null) {
+					registroService.addRegistro(data);
+					
+				}
+				
+				
+				if(fecha.equalsIgnoreCase(ultimoFecha)) {
+					break;
+				}
+				c.setTime(next);
+				c.add(Calendar.DATE, 1);
+				next = c.getTime();
+			}
+			
+			
+			
+			//horarioService.addHorario(horario);
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		return "redirect:/private/index/list/horarios";
+	}
 	
 }

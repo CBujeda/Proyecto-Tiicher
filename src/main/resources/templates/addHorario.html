@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>TIICHER | CREAR NUEVA SESION</title>
+<link th:href="@{http://localhost:9876/css/bootstrap.min.css}" rel="stylesheet">
+<style type="text/css">
+.dat_but {
+  transition-duration: 0.4s;
+}
+
+.dat_but:hover {
+  background-color: grey; /* Green */
+  color: white;
+}
+
+</style>
+</head>
+<body>
+
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">TIICHER</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+	    	<!--  -->
+		
+      <form th:action="@{/logout}" method="post" style="height:100%">
+      	<a style="color:#FFF">
+      		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+			  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+			  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+			</svg>
+		</a>
+          <button type="submit" class="dat_but" style="height:30px">Cerrar Sesion</button>
+      </form>
+      <!-- class="nav-link px-3" -->
+      
+    </div>
+  </div>
+</header>
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-sm-center h-100">
+				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+					<div class="text-center my-5">
+
+					<div th:if="${param.error}" class="alert alert-danger mb-3">Credenciales incorrectas</div>
+						<form method="POST" class="needs-validation" novalidate="" autocomplete="off" th:object="${horario}" th:action="@{/private/index/add/horario/new}" role="form">
+							
+							<div class="mb-3">
+								<label class="mb-2 text-muted" for="clase">Clase</label>
+				                <select field="*{clase}" name="clase"  class="form-select" >
+				                    <option th:each="clase:${clase}"
+				                            th:value="${clase.id_clase}"  
+				                            th:text="| ${clase.curso.nombre_curso} > ${clase.nombre_clase} |" >
+				                    </option>
+								 </select>
+							 </div>
+							<div class="mb-3">
+								<label class="mb-2 text-muted" for="dia_semana">Dia de la semana</label>
+				                <select field="*{dia_semana}" name="dia_semana"  class="form-select" >
+				                    <option th:value="L"  
+				                            th:text="Lunes" >
+				                    </option>
+				                    <option th:value="M"  
+				                            th:text="Martes" >
+				                    </option>
+				                    <option th:value="X"  
+				                            th:text="Miercoles" >
+				                    </option>
+				                    <option th:value="J"  
+				                            th:text="Jueves" >
+				                    </option>
+				                    <option th:value="V"  
+				                            th:text="Viernes" >
+				                    </option>
+				                    <option th:value="S"  
+				                            th:text="Sabado" >
+				                    </option>
+				                    <option th:value="D"  
+				                            th:text="Domingo" >
+				                    </option>
+								 </select>
+							 </div>
+							 <div class="mb-3">
+							 		<label class="mb-2 text-muted" for="clase">Hora</label>
+							 		<input type="time" th:value="${{timeNow.hora_inicio}}"  field="*{hora_inicio}" name="hora_inicio" id="user" class="form-control" required >
+							 </div>
+							<div class="d-flex align-items-center">
+								<a type="button" th:href="@{/private/index/list/horarios}" class="btn btn-sm btn-outline-secondary">Atras</a>
+								<input type="submit" class="btn btn-sm btn-outline-secondary" value="Guardar"/>
+							</div>
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+	
+	
+</body>
+</html>
