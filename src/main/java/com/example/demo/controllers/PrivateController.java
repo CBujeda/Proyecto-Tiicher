@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -235,7 +236,100 @@ public class PrivateController {
 			session.setAttribute("usuario", usuario);
 		}
 		try {
-			registroService.updateregistro(registro);
+			boolean horario = false;
+			boolean valid = false;
+			DateFormat fechaFormat = new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat timeFormat = new SimpleDateFormat("HH:mm");
+			Date fecha_ini = registro.getFecha_hora_inicio();
+			List<Horario> h = horarioService.findAll();
+			String hora = timeFormat.format(fecha_ini);
+			String dia;
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(fecha_ini);
+			for(int i = 0; i < h.size(); i++) {
+				if(h.get(i).getClase().getId_clase() == registro.getClase().getId_clase()) {
+					horario = true;
+					dia = h.get(i).getDia_semana();
+					if(hora.equalsIgnoreCase(h.get(i).getHora_inicio())) { 
+						 if(dia.equalsIgnoreCase("L")) {
+							 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY){ 
+								 valid = true;
+						        }
+						}else if(dia.equalsIgnoreCase("M")) {
+							 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY){ 
+								 valid = true;
+							 	}
+						} else if(dia.equalsIgnoreCase("X")) {
+							 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY){ 
+								 valid = true;
+						        }
+						} else if(dia.equalsIgnoreCase("J")) {
+							 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY){ 
+								 valid = true;
+						        }
+						} else if(dia.equalsIgnoreCase("V")) {
+							 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY){ 
+								 valid = true;
+						        }
+						} else if(dia.equalsIgnoreCase("S")) {
+							 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){ 
+								 valid = true;
+						        }
+						} else if(dia.equalsIgnoreCase("D")) {
+							 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){ 
+								 valid = true;
+						        }
+						}
+					}
+				}
+			}
+			if(horario == true) {
+				//System.out.println("tiene horario");
+				if(valid == false) {
+					//System.out.println("no es valido");
+					return "redirect:/private/index/edit/"+ registro.getId_registro() +"?respHorario=true";
+					//return "redirect:/private/index?respHorario=true";
+				}else {
+					System.out.println("ES VALIDO");
+					Calendar c = Calendar.getInstance();
+					Date temp = fecha_ini;
+					List<Registro> regL = registroService.findAll();
+					List<Registro> procesado1 = new ArrayList<Registro>();
+ 					for(int i = 0; i < regL.size();i++) {
+						if(regL.get(i).getClase().getId_clase() == registro.getClase().getId_clase()) {
+							procesado1.add(regL.get(i));
+						}
+					}
+ 					
+ 					c.setTime(fecha_ini);
+					c.add(Calendar.DATE, -7);
+					fecha_ini = c.getTime();
+ 					
+ 					regL = new ArrayList<Registro>();
+ 					for(int i = 0; i < procesado1.size(); i++) {
+ 						if(!procesado1.get(i).getFecha_hora_inicio().before(fecha_ini)) {
+							regL.add(procesado1.get(i));
+						}
+ 					}
+ 					
+ 					
+					for(int i = 0; i < regL.size(); i++) {
+						c.setTime(regL.get(i).getFecha_hora_inicio());
+						c.add(Calendar.DATE, 7);
+						regL.get(i).setFecha_hora_inicio(c.getTime());
+					}
+					for(int i = 0; i < regL.size();i++) {
+						registroService.updateregistro(regL.get(i));
+					}
+				}
+				registroService.updateregistro(registro);
+			} else {
+				//System.out.println("NO HAY HORARIO");
+				registroService.updateregistro(registro);
+			}			
+			
+			
+			
 		}catch(Exception e) {
 			System.out.println(e);
 		}	
@@ -610,28 +704,26 @@ public class PrivateController {
 		}
 		
 		try {
-			//-- fecha junio
+			//-- fecha 9 junio
 			DateFormat salidaformat = new SimpleDateFormat("yyyy-MM-dd"); //yyyy-mm-dd hh:mm:ss
 			DateFormat year = new SimpleDateFormat("yyyy"); //yyyy
 			Date now = new Date();
 			String yearStr = year.format(now);
 			Calendar cl = Calendar.getInstance();
 			cl.setTime(now);
-			cl.set(Integer.parseInt(yearStr), 5, 9);
+			cl.set(Integer.parseInt(yearStr), 5, 30);
 			now = cl.getTime();
 			String ultimoFecha = salidaformat.format(now);
-			System.out.println("Ultima fecha" + ultimoFecha);
-			
-			
+			String diaSem = horario.getDia_semana();
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //yyyy-mm-dd hh:mm:ss
 			Date next = new Date();
 			Calendar c = Calendar.getInstance();
-			
 			DateFormat dateFormatoutput = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			
 			while(true) {	
+				boolean valid = false;
+				
 				String fecha = dateFormat.format(next);
-				System.out.println(fecha);
 				String output_fecha_inicio = fecha + " " + horario.getHora_inicio();
 				String output_fecha_finalizacion = fecha +" " + horario.getHora_inicio();
 				Calendar cfin = Calendar.getInstance();
@@ -640,21 +732,52 @@ public class PrivateController {
 				cfin.setTime(off);
 				cfin.add(Calendar.HOUR, 1);
 				off = cfin.getTime();
-				System.out.println(ofi);
-				System.out.println(off);
-				
-				Registro data = new Registro();
-				data.setClase(horario.getClase());
-				data.setFecha_hora_inicio(ofi);
-				data.setFecha_hora_finalizacion(off);
-				data.setHomework("");
-				data.setAnotaciones("");
-				data.setCancelado(0);
-				if(data != null) {
-					registroService.addRegistro(data);
-					
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(ofi);
+				if(diaSem.equalsIgnoreCase("L")) {
+					 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY){ 
+						 valid = true;
+				        }
+				} else if(diaSem.equalsIgnoreCase("M")) {
+					 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY){ 
+						 valid = true;
+				        }
+				} else if(diaSem.equalsIgnoreCase("X")) {
+					 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY){ 
+						 valid = true;
+				        }
+				} else if(diaSem.equalsIgnoreCase("J")) {
+					 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY){ 
+						 valid = true;
+				        }
+				} else if(diaSem.equalsIgnoreCase("V")) {
+					 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY){ 
+						 valid = true;
+				        }
+				} else if(diaSem.equalsIgnoreCase("S")) {
+					 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){ 
+						 valid = true;
+				        }
+				} else if(diaSem.equalsIgnoreCase("D")) {
+					 if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){ 
+						 valid = true;
+				        }
 				}
 				
+				
+				if(valid == true) {
+					Registro data = new Registro();
+					data.setClase(horario.getClase());
+					data.setFecha_hora_inicio(ofi);
+					data.setFecha_hora_finalizacion(off);
+					data.setHomework("");
+					data.setAnotaciones("");
+					data.setCancelado(0);
+					if(data != null) {
+						registroService.addRegistro(data);
+						
+					}
+				}
 				
 				if(fecha.equalsIgnoreCase(ultimoFecha)) {
 					break;
@@ -664,9 +787,9 @@ public class PrivateController {
 				next = c.getTime();
 			}
 			
-			
-			
-			//horarioService.addHorario(horario);
+			if(horario != null) {
+				horarioService.addHorario(horario);
+			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}

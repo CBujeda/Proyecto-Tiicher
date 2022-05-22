@@ -7,6 +7,8 @@ import com.example.demo.models.entity.Registro;
 
 public interface IRegistroService {
 	
+	public List<Registro> findAll();
+	
 	public List<Registro> findRegistroByHoy();
 	
 	public boolean addRegistro(Registro registro);

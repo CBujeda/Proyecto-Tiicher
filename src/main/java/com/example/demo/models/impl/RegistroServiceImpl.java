@@ -81,5 +81,10 @@ public class RegistroServiceImpl implements IRegistroService {
 		}
 		return false;
 	}
+
+	@Override
+	public List<Registro> findAll() {
+		return (List<Registro>) registroDao.findAll();
+	}
 	
 }

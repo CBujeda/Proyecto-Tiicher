@@ -187,8 +187,9 @@
 				<td th:text="${registro.clase.nombre_clase}"></td> 
 				<td th:text="${registro.fecha_hora_inicio}"></td>
 				<td th:text="${registro.fecha_hora_finalizacion}"></td>
-				<td th:text="${registro.anotaciones}"></td>
-				<td th:text="${registro.homework}"></td>
+				<!--    -->
+				<td> <textarea id="textarea" rows="2" cols="" th:text="${registro.anotaciones}" disabled readonly style="width: 100%;color: #FFF; background: transparent; border: none; outline: none;"></textarea></td>
+				<td> <textarea id="textarea" rows="2" cols="" th:text="${registro.homework}" disabled readonly style="width: 100%; color: #FFF; background: transparent; border: none; outline: none;"></textarea></td>
 				<td> 
 					<a th:href="@{'/private/index/edit/{id}' (id=${registro.id_registro})}">
 						<svg style="cursor: hand" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -217,6 +218,9 @@
 			}
 		
 		</script>
+		
+		
+	
 		
 		
 	</div>

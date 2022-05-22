@@ -25,6 +25,9 @@ public class Clase implements Serializable {
 	@OneToMany(mappedBy = "clase",orphanRemoval = true)
 	private Set<Registro> listRegistro;
 	
+	@OneToMany(mappedBy = "clase",orphanRemoval = true)
+	private Set<Horario> listHorario;
+	
     @ManyToOne
     @JoinColumn(name = "id_curso") // creamos la columna de tipo objeto con joinColumn
     private Curso curso;
