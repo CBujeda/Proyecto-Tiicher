@@ -797,4 +797,24 @@ public class PrivateController {
 		return "redirect:/private/index/list/horarios";
 	}
 	
+	
+	@GetMapping("/index/delete/horario/{id}")
+	public String deleteHorario(Authentication auth, HttpSession session, Model model,@PathVariable("id") long id) {
+		String username = auth.getName();
+		if(session.getAttribute("usuario") == null) {
+			Usuario usuario = usuarioService.findByUsername(username);
+			usuario.setPassword(null);
+			session.setAttribute("usuario", usuario);
+		}
+		try {
+			horarioService.deleteById(id);
+		}catch(Exception e) {
+			System.out.println(e.toString());
+		}
+		
+		
+		return "redirect:/private/index/list/horarios";
+	}
+	
+	
 }

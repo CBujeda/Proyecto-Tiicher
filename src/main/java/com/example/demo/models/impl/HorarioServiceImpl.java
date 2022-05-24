@@ -30,6 +30,18 @@ public class HorarioServiceImpl implements IHorarioService {
 	public List<Horario> findAll() {
 		return (List<Horario>) horarioDAO.findAll();
 	}
+
+	@Override
+	public boolean deleteById(long id) {
+		try {
+			horarioDAO.deleteById(id);
+			return true;
+		}catch(Exception e) {
+			System.out.println(e.toString());
+			return false;
+		}
+		
+	}
 	
 	
 

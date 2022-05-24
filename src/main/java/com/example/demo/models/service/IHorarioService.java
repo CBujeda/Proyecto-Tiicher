@@ -10,4 +10,6 @@ public interface IHorarioService  {
 	
 	public List<Horario> findAll();
 	
+	public boolean deleteById(long id);
+	
 }
