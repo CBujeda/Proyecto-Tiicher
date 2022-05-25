@@ -35,6 +35,10 @@ public class AddController {
 	@Autowired
 	private IClaseService claseService;
 	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve la pantalla para crear un registro
+	 */
 	@GetMapping("/add")
 	public String add(Authentication auth, HttpSession session, Model model) {
 		String username = auth.getName();
@@ -59,6 +63,10 @@ public class AddController {
 		return "new";
 	}
 	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve la pantalla para crear un nuevo curso
+	 */
 	@GetMapping("/add/curso")
 	public String addCurso(Authentication auth, HttpSession session, Model model) {
 		String username = auth.getName();
@@ -71,6 +79,10 @@ public class AddController {
 		return "newCurso";
 	}
 	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve una pantalla para crear una clase
+	 */
 	@GetMapping("/add/clase")
 	public String addClase(Authentication auth, HttpSession session, Model model) {
 		String username = auth.getName();

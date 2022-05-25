@@ -48,6 +48,10 @@ public class PrivateController {
 	@Autowired
 	private IHorarioService horarioService;
 	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve index con todos sus datos
+	 */
 	@GetMapping("/index")
 	public String index(Authentication auth, HttpSession session,Model model) {
 		String username = auth.getName();
@@ -73,7 +77,10 @@ public class PrivateController {
 		return "index";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual añade un registro en la BBDD
+	 */
 	@PostMapping("/index/add")
 	public String addindex(Authentication auth, HttpSession session,Model model, Registro registro) {
 		String username = auth.getName();
@@ -93,7 +100,10 @@ public class PrivateController {
 		return "redirect:/private/index";
 	}
 	
-
+	/**
+	 * Pre:
+	 * Post: Metodo el cual añade un curso en la BBDD
+	 */
 	@PostMapping("/index/add/curso")
 	public String addCurso(Authentication auth, HttpSession session, Model model, @ModelAttribute Curso curso) {
 		String username = auth.getName();
@@ -120,6 +130,10 @@ public class PrivateController {
 		return "redirect:/private/index";
 	}
 	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual añade una clase en la BBDD
+	 */
 	@PostMapping("/index/add/clase")
 	public String addClase(Authentication auth, HttpSession session, Model model,  @ModelAttribute Clase clase) {
 		String username = auth.getName();
@@ -148,7 +162,10 @@ public class PrivateController {
 	}
 	
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve el index con los registros en una fecha elegida
+	 */
 	@PostMapping("/index/date")
 	public String addDate(Authentication auth, HttpSession session, Model model,  @ModelAttribute Registro registro) {
 		String username = auth.getName();
@@ -178,7 +195,10 @@ public class PrivateController {
 	
 	
 	
-
+	/**
+	 * Pre:
+	 * Post: Metodo el cual elimina un registro con un id
+	 */
 	@GetMapping("/index/delete/{id}")
 	public String adddelete(Authentication auth, HttpSession session, Model model,@PathVariable("id") long id) {
 		String username = auth.getName();
@@ -195,7 +215,10 @@ public class PrivateController {
 		return "redirect:/private/index";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve la pantalla en la cual se edita un registro
+	 */
 	@GetMapping("/index/edit/{id}")
 	public String addedit(Authentication auth, HttpSession session, Model model,@PathVariable("id") long id) {
 		String username = auth.getName();
@@ -227,6 +250,10 @@ public class PrivateController {
 		return "edit";
 	}
 	
+	/**
+	 * Pre:
+	 * Post: Metodo que actualiza un registro recivido
+	 */
 	@PostMapping("/index/edit/update")
 	public String updateRegistro(Authentication auth, HttpSession session, Model model,  @ModelAttribute Registro registro) {
 		String username = auth.getName();
@@ -336,7 +363,10 @@ public class PrivateController {
 		return "redirect:/private/index";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve la lista de cursos
+	 */
 	@GetMapping("/index/edit/list/curso")
 	public String editListCurso(Authentication auth, HttpSession session,Model model) {
 		String username = auth.getName();
@@ -357,6 +387,10 @@ public class PrivateController {
 		return "listCurso";
 	}
 	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve la pantalla para editar un curso
+	 */
 	@GetMapping("/index/edit/curso/{id}")
 	public String editCurso(Authentication auth, HttpSession session, Model model,@PathVariable("id") long id) {
 		String username = auth.getName();
@@ -370,7 +404,10 @@ public class PrivateController {
 		return "editCurso";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual actualiza un curso recivido
+	 */
 	@PostMapping("/index/edit/curso/update")
 	public String editCursoUpdate(Authentication auth, HttpSession session, Model model, @ModelAttribute Curso curso) {
 		String username = auth.getName();
@@ -397,7 +434,10 @@ public class PrivateController {
 		return "redirect:/private/index/edit/list/curso";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo que elimina un curso con su id recivida
+	 */
 	@GetMapping("/index/delete/curso/{id}")
 	public String deleteCurso(Authentication auth, HttpSession session, Model model,@PathVariable("id") long id) {
 		String username = auth.getName();
@@ -416,7 +456,10 @@ public class PrivateController {
 		return "redirect:/private/index/edit/list/curso";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo que devuelve la lista de las clases
+	 */
 	@GetMapping("/index/edit/list/clase")
 	public String editListClase(Authentication auth, HttpSession session,Model model) {
 		String username = auth.getName();
@@ -437,7 +480,10 @@ public class PrivateController {
 		return "listClase";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve una pantalla para editar una clase
+	 */
 	@GetMapping("/index/edit/clase/{id}")
 	public String editClase(Authentication auth, HttpSession session, Model model,@PathVariable("id") long id) {
 		String username = auth.getName();
@@ -459,7 +505,10 @@ public class PrivateController {
 		return "editClase";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: metodo el cual actualiza una clase
+	 */
 	@PostMapping("/index/edit/clase/update")
 	public String editClaseUpdate(Authentication auth, HttpSession session, Model model, @ModelAttribute Clase clase) {
 		String username = auth.getName();
@@ -488,7 +537,10 @@ public class PrivateController {
 	}
 	
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual elimina una clase con un id
+	 */
 	@GetMapping("/index/delete/clase/{id}")
 	public String deleteClase(Authentication auth, HttpSession session, Model model,@PathVariable("id") long id) {
 		String username = auth.getName();
@@ -507,7 +559,10 @@ public class PrivateController {
 		return "redirect:/private/index/edit/list/clase";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve una pantalla para editar un usuario
+	 */
 	@GetMapping("/index/user")
 	public String goUser(Authentication auth, HttpSession session, Model model) {
 		String username = auth.getName();
@@ -521,7 +576,10 @@ public class PrivateController {
 		return "editUser";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo que actualiza un usuario en la BBDD
+	 */
 	@PostMapping("/index/user/update")
 	public String userUpdate(Authentication auth, HttpSession session, Model model, @ModelAttribute Usuario user1) {
 		String username = auth.getName();
@@ -572,7 +630,10 @@ public class PrivateController {
 		
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve los registros del dia siguiente
+	 */
 	@PostMapping("/index/date/next")
 	public String addDateNext(Authentication auth, HttpSession session, Model model,  @ModelAttribute Registro registro) {
 		String username = auth.getName();
@@ -607,6 +668,10 @@ public class PrivateController {
 		return "index";
 	}
 	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve los registros del dia anterior
+	 */
 	@PostMapping("/index/date/previous")
 	public String addDatePrevious(Authentication auth, HttpSession session, Model model,  @ModelAttribute Registro registro) {
 		String username = auth.getName();
@@ -641,7 +706,11 @@ public class PrivateController {
 		return "index";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve una pantalla con la
+	 * 		 lista de horarios
+	 */
 	@GetMapping("/index/list/horarios")
 	public String editListHorario(Authentication auth, HttpSession session,Model model) {
 		String username = auth.getName();
@@ -664,7 +733,10 @@ public class PrivateController {
 		return "listHorarios";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve una pantalla para editar un horario
+	 */
 	@GetMapping("/index/add/horario")
 	public String editNewHorario(Authentication auth, HttpSession session,Model model) {
 		String username = auth.getName();
@@ -693,7 +765,10 @@ public class PrivateController {
 		return "addHorario";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual crea un horario en la BBDD
+	 */
 	@PostMapping("/index/add/horario/new")
 	public String addHorario(Authentication auth, HttpSession session, Model model,  @ModelAttribute Horario horario) {
 		String username = auth.getName();
@@ -797,7 +872,10 @@ public class PrivateController {
 		return "redirect:/private/index/list/horarios";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual elimina un horario de la BBDD mediante una id
+	 */
 	@GetMapping("/index/delete/horario/{id}")
 	public String deleteHorario(Authentication auth, HttpSession session, Model model,@PathVariable("id") long id) {
 		String username = auth.getName();

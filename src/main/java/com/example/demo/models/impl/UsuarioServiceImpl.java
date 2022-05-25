@@ -22,23 +22,38 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	private IUsuarioDAO usuarioDao;
 	
 
-	
+	/**
+	 * Pre:
+	 * Post: Metodo que busca un usuario por nombre de usuario
+	 */
 	@Override
 	public Usuario findByUsername(String username) {
 		return usuarioDao.findByUsername(username);
 	}
 
+	/**
+	 * pre:
+	 * Post: Metodo el cual registra un usuario
+	 */
 	@Override
 	public Usuario registrar(Usuario u) {
 		u.setPassword(passwordEncoder.encode(u.getPassword()));
 		return usuarioDao.save(u);
 	}
-
+	
+	/**
+	 * Pre:
+	 * post: Metodo el cual devuelve todos los usuarios
+	 */
 	@Override
 	public List<Usuario> findAll() {
 		return usuarioDao.findAll();
 	}
 
+	/**
+	 * Pre:
+	 * Post: Metodo el cual elimina un usuario
+	 */
 	@Override
 	public boolean deletebyUser(Usuario u) {
 		try {
@@ -50,7 +65,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		}
 		
 	}
-
+	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual actualiza un usuario sin actualizar contraseña
+	 */
 	@Override
 	public boolean updateNoPass(Usuario u) {
 		try {
@@ -65,7 +84,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		}
 		
 	}
-
+	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual actualiza un usuario con contraseña
+	 */
 	@Override
 	public boolean updateWithPass(Usuario u) {
 		u.setPassword(passwordEncoder.encode(u.getPassword()));

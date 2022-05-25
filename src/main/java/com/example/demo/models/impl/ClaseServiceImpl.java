@@ -15,6 +15,10 @@ public class ClaseServiceImpl implements IClaseService {
 	@Autowired
 	private IClaseDAO claseDao;
 	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual añade una clase a la BBDD
+	 */
 	@Override
 	public boolean addClase(Clase clase) {
 		
@@ -29,11 +33,19 @@ public class ClaseServiceImpl implements IClaseService {
 
 	}
 
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve todas las clases de la BBDD
+	 */
 	@Override
 	public List<Clase> findAll() {
 		return (List<Clase>) claseDao.findAll();
 	}
-
+	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve una clase por id
+	 */
 	@Override
 	public Clase findById(long id) {
 		Optional<Clase> opt = claseDao.findById(id);
@@ -45,7 +57,11 @@ public class ClaseServiceImpl implements IClaseService {
 	
 		}
 	}
-
+	
+	/**
+	 * Pre:
+	 * Post: Metod el cual actualiza una clase por id
+	 */
 	@Override
 	public boolean updateById(Clase clase) {
 		try{
@@ -60,7 +76,11 @@ public class ClaseServiceImpl implements IClaseService {
 		
 		
 	}
-
+	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual elimina una clase por id
+	 */
 	@Override
 	public boolean deleteById(long id) {
 		try{

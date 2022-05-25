@@ -2,7 +2,6 @@ package com.example.demo.models.impl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +23,10 @@ public class RegistroServiceImpl implements IRegistroService {
 		return registroDao.findbyhoy();
 	}
 
+	/**
+	 * Pre:
+	 * Post: Metodo el cual añade un registro
+	 */
 	@Override
 	public boolean addRegistro(Registro registro) {
 		try {
@@ -35,12 +38,20 @@ public class RegistroServiceImpl implements IRegistroService {
 		}
 		
 	}
-
+	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve registros por una fecha
+	 */
 	@Override
 	public List<Registro> findRegistroByFecha(String fecha) {
 		return registroDao.findbyFecha(fecha);
 	}
 
+	/**
+	 * Pre:
+	 * Post: Metodo el cual elimina un registro  por id
+	 */
 	@Override
 	public boolean deleteRegistrobyId(Long id) {
 		try {
@@ -53,6 +64,10 @@ public class RegistroServiceImpl implements IRegistroService {
 		
 	}
 
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve un registro por id
+	 */
 	@Override
 	public Registro getRegistroById(Long id) {
 		Optional<Registro> opt = registroDao.findById(id);
@@ -63,7 +78,11 @@ public class RegistroServiceImpl implements IRegistroService {
 		}
 		
 	}
-
+	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual actualiza un registro
+	 */
 	@Override
 	public boolean updateregistro(Registro registro) {
 		try {
@@ -81,7 +100,11 @@ public class RegistroServiceImpl implements IRegistroService {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve todos los registros
+	 */
 	@Override
 	public List<Registro> findAll() {
 		return (List<Registro>) registroDao.findAll();

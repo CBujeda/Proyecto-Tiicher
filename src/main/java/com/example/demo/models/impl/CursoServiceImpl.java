@@ -14,6 +14,10 @@ public class CursoServiceImpl implements ICursoService {
 	@Autowired
 	private ICursoDAO cursoDao;
 	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual alade un curso
+	 */
 	@Override
 	public boolean addCurso(Curso curso) {
 		// TODO Auto-generated method stub
@@ -26,12 +30,20 @@ public class CursoServiceImpl implements ICursoService {
 			return false;	
 		}
 	}
-
+	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve todos los cursos
+	 */
 	@Override
 	public List<Curso> findAll() {
 		return (List<Curso>) cursoDao.findAll();
 	}
 
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve un curso por id
+	 */
 	@Override
 	public Curso findById(long id) {
 		Optional<Curso> opt = cursoDao.findById(id);
@@ -41,7 +53,11 @@ public class CursoServiceImpl implements ICursoService {
 			return opt.get();
 		}
 	}
-
+	
+	/**
+	 * Pre:
+	 * Post: Metodo elc ual actualiza un curso por id
+	 */
 	@Override
 	public boolean updateById(Curso curso) {
 		try {
@@ -53,7 +69,11 @@ public class CursoServiceImpl implements ICursoService {
 		}
 		
 	}
-
+	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual elimina un curo por id
+	 */
 	@Override
 	public boolean deleteById(long id) {
 		try {

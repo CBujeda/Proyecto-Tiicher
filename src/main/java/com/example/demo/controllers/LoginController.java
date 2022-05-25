@@ -19,19 +19,30 @@ public class LoginController {
 	@Autowired
 	private IUsuarioService usuarioService;
 	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve la pantalla de login
+	 */
 	@GetMapping("/auth/login")
 	public String login(Model model) {
 		model.addAttribute("usuario", new Usuario());
 		return "login";
 	}
 	
-	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve la pantalla de registro
+	 */
 	@GetMapping("/auth/registro")
 	public String registroForm(Model model) {
 		model.addAttribute("usuario", new Usuario());
 		return "registro";
 	}
-
+	
+	/**
+	 * Pre:
+	 * Post: Metodo el cual devuelve un registro a la BBDD
+	 */
 	@PostMapping("/auth/registro")
 	public String registro(@Validated @ModelAttribute Usuario usuario, BindingResult result, Model model) {
 		Usuario user;
